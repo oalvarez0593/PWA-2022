@@ -21,4 +21,3 @@
 
 - Ver clase 9 del video.
 
-#
