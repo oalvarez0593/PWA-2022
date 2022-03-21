@@ -18,6 +18,20 @@
 
 // Resolución de la tarea #1
 
+/* fetch('https://swapi.dev/api/people/')
+    .then(result => {
+        result.json()
+            .then(data => {
+                data.results.forEach(element => {
+                    var obj = {
+                        'nombre': element.name,
+                        'genero': element.gender
+                    };
+                    console.log(obj);
+                });
+            });
+    }) */
+
 
 
 
@@ -28,7 +42,7 @@
  Similar al ejercicio anterior... haga un llamado a la misma api
  (puede reutilizar el código )
  https://swapi.dev/api/people/1/
- 
+
  Pero con el nombre y el género, haga un posteo
  POST a: https://reqres.in/api/users
 
@@ -40,5 +54,24 @@
 
 
 
+function guardarPersona(persona) {
+    let newUser = {
+        'name': persona.name,
+        'gender': persona.gender
+    };
 
+    return fetch('https://reqres.in/api/users', {
+        method: 'POST',
+        body: JSON.stringify(newUser),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
 
+fetch('https://swapi.dev/api/people/1/')
+    .then(result => result.json())
+    .then(guardarPersona)
+    .then(users => users.json())
+    .then(console.log)
+    .catch(console.error);
