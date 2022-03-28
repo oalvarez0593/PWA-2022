@@ -17,11 +17,11 @@ self.addEventListener('install', event => {
             console.log('SW: Instalación terminada');
             self.skipWaiting();
             return resolve();
-        }, 2000);
+        }, 1);
     });
 
     event.waitUntil(instalacion);
-    
+
 
 });
 
@@ -32,4 +32,10 @@ self.addEventListener('activate', event => {
     /* Aqui es un muy buen lugar para borrar caché viejo */
 
     console.log('SW2: activo y listo para funcionar');
+});
+
+/* FETCH: manejo de peticiones HTTP */
+
+self.addEventListener('fetch', event => {
+    console.log('SW3:', event.request.url);
 });
