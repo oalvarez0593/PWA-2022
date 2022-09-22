@@ -9,7 +9,7 @@ self.addEventListener('install', event => {
 
 
     /* Instrucción para que el SW se active inmediatamente */
-    // --> self.skipWaiting();
+     self.skipWaiting();
 
     const instalacion = new Promise((resolve, reject) => {
 
@@ -37,5 +37,11 @@ self.addEventListener('activate', event => {
 /* FETCH: manejo de peticiones HTTP */
 
 self.addEventListener('fetch', event => {
+    /* Aplicar las estrategias del caché */
     console.log('SW3:', event.request.url);
+
+    if (event.request.url.includes('https://reqres.in/')) {
+        const resp = new Response(`{ ok: false, message: 'jajaja'}`);
+        event.respondWith(resp);
+    }
 });
