@@ -9,7 +9,7 @@ self.addEventListener('install', event => {
 
 
     /* Instrucción para que el SW se active inmediatamente */
-     self.skipWaiting();
+    self.skipWaiting();
 
     const instalacion = new Promise((resolve, reject) => {
 
@@ -38,10 +38,23 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     /* Aplicar las estrategias del caché */
-    console.log('SW3:', event.request.url);
+    /* console.log('SW3:', event.request.url);
 
     if (event.request.url.includes('https://reqres.in/')) {
         const resp = new Response(`{ ok: false, message: 'jajaja'}`);
         event.respondWith(resp);
-    }
+    } */
+
 });
+
+//SYNC: Es cuando recuperamos la conexión a internet.
+self.addEventListener('sync', event => {
+    console.log('tenemos conexión');
+    console.log(event.tag);
+})
+
+//PUSH: Manejar las push notifications.
+
+self.addEventListener('push', event => {
+    console.log('Notificación recibida.');
+})
