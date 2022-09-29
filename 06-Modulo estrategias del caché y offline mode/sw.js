@@ -18,10 +18,28 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
 
-    //CACHE ONLY
+    //#1 CACHE ONLY
     /* Cuando la app cargará toda desde el caché, nunca va a requerir de internet */
 
-    event.respondWith(caches.match(event.request));
+    /* event.respondWith(caches.match(event.request)); */
 
 
+    //#2 Caché with Network Fallback
+    const respuesta = caches.match(event.request).then(resp => {
+        if (resp) {
+            return resp;
+        } else {
+            /* No existe el archivo, entonces tengo que ir a la web. */
+            console.log('No existe', event.request.url);
+
+            return fetch(event.request).then(newRespon => {
+                caches.open('cache-1').then(cache => {
+                    cache.put(event.request, newRespon);
+                });
+                return newRespon.clone();
+            });
+        }
+    });
+
+    event.respondWith(respuesta);
 });
